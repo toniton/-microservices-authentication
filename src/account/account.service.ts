@@ -23,8 +23,9 @@ export class AccountService {
     });
   }
 
-  async create(account: AuthAccount): Promise<AuthAccount | undefined> {
+  async create(account: AuthAccount): Promise<AuthAccount | undefined | any> {
     const authAccount = this.authAccountRepository.create(account);
-    return await this.authAccountRepository.save(authAccount);
+    return await this.authAccountRepository.save(authAccount)
+      .catch(({ errmsg }): any => ({ errmsg }));
   }
 }

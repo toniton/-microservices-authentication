@@ -1,8 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, CreateDateColumn, Unique } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Optional } from '@nestjs/common';
+import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from 'class-validator';
 
 @Entity()
+@Unique(['username', 'email'])
 export class AuthAccount {
   @ObjectIdColumn()
   // tslint:disable-next-line:variable-name
@@ -16,6 +18,7 @@ export class AuthAccount {
   password: string;
 
   @Column('text')
+  @IsEmail()
   email: string;
 
   @Optional()
@@ -27,4 +30,7 @@ export class AuthAccount {
 
   @Column()
   isPublished: boolean;
+
+  @CreateDateColumn()
+  createdDate: string;
 }
