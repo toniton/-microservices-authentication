@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthAccount } from './account.entity';
+import { createHmac } from 'crypto';
 
 @Injectable()
 export class AccountService {
@@ -20,6 +21,13 @@ export class AccountService {
       where: {
         username,
       },
+    });
+  }
+
+  async findByEmailAndPassword(username: string, password: string): Promise<AuthAccount | undefined> {
+    return this.authAccountRepository.findOne({
+      username,
+      password: createHmac('sha256', password).digest('hex'),
     });
   }
 

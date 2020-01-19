@@ -1,7 +1,8 @@
-import { Entity, Column, ObjectIdColumn, CreateDateColumn, Unique } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, CreateDateColumn, Unique, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Optional } from '@nestjs/common';
-import { IsEmail } from 'class-validator';
+import { IsEmail, MinLength } from 'class-validator';
+import { createHmac } from 'crypto';
 
 @Entity()
 @Unique(['username', 'email'])
@@ -14,6 +15,7 @@ export class AuthAccount {
   username: string;
 
   @Exclude()
+  @MinLength(4)
   @Column({ length: 500 })
   password: string;
 
@@ -33,4 +35,12 @@ export class AuthAccount {
 
   @CreateDateColumn()
   createdDate: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword() {
+    if (this.password) {
+      this.password = createHmac('sha256', this.password).digest('hex');
+    }
+  }
 }
