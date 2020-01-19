@@ -1,7 +1,7 @@
 import { Entity, Column, ObjectIdColumn, CreateDateColumn, Unique } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Optional } from '@nestjs/common';
-import {Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max} from 'class-validator';
+import { IsEmail } from 'class-validator';
 
 @Entity()
 @Unique(['username', 'email'])
