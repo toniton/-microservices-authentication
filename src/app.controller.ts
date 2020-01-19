@@ -1,12 +1,15 @@
 import { Get, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthAccount } from 'account/account.service';
+import { AccountService } from 'account/account.service';
 // import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(
+    private readonly appService: AppService,
+    private readonly accountService: AccountService,
+  ) { }
 
   @Get()
   root(): string {
@@ -15,7 +18,7 @@ export class AppController {
 
   @UseGuards(AuthGuard('local'))
   @Post('servicelogin')
-  async servicelogin(@Request() req): Promise<AuthAccount> {
+  async servicelogin(@Request() req): Promise<any> {
     return this.appService.login(req.user);
   }
 
@@ -23,6 +26,16 @@ export class AppController {
   @Get('account')
   getAccount(@Request() req) {
     return req.user;
+  }
+
+  @Post('servicesignup')
+  createAccount(@Request() req) {
+    return this.accountService.create(req.body);
+  }
+
+  @Get('accounts')
+  getAllAccount() {
+    return this.accountService.findAll();
   }
 
   // @MessagePattern({ cmd: 'sum' })

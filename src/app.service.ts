@@ -21,9 +21,9 @@ export class AppService {
   }
 
   async login(account: any) {
-    const payload = { username: account.username, sub: account.userId };
+    const payload = { username: account.username, sub: account._id };
     return {
-      access_token: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload),
     };
   }
   root(): string {

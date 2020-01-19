@@ -1,32 +1,30 @@
 import { Injectable } from '@nestjs/common';
-
-export type AuthAccount = any;
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AuthAccount } from './account.entity';
 
 @Injectable()
 export class AccountService {
-  private readonly accounts: AuthAccount[];
 
-  constructor() {
-    this.accounts = [
-      {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
-      },
-      {
-        userId: 2,
-        username: 'chris',
-        password: 'secret',
-      },
-      {
-        userId: 3,
-        username: 'maria',
-        password: 'guess',
-      },
-    ];
+  constructor(
+    @InjectRepository(AuthAccount)
+    private readonly authAccountRepository: Repository<AuthAccount>,
+  ) { }
+
+  async findAll(): Promise<AuthAccount[] | undefined> {
+    return this.authAccountRepository.find();
   }
 
   async findOne(username: string): Promise<AuthAccount | undefined> {
-    return this.accounts.find(account => account.username === username);
+    return this.authAccountRepository.findOne({
+      where: {
+        username,
+      },
+    });
+  }
+
+  async create(account: AuthAccount): Promise<AuthAccount | undefined> {
+    const authAccount = this.authAccountRepository.create(account);
+    return await this.authAccountRepository.save(authAccount);
   }
 }

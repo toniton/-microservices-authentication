@@ -1,0 +1,14 @@
+{
+    "name":"default",
+    "type": "mongodb",
+    "host": "127.0.0.1",
+    "port": 27018,
+    "username": "root",
+    "password": "example",
+    "database": "circletv",
+    "authSource": "admin",
+    "entities": [
+        "dist/**/*.entity.js"
+    ],
+    "synchronize": true
+}
