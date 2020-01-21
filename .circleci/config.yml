@@ -2,20 +2,18 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.13.0
+  working_directory: ~/repo
+
+
 version: 2
 jobs:
   build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.13.0
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
 
@@ -39,6 +37,7 @@ jobs:
             - node_modules
           
   test:
+    <<: *defaults
     steps:
       - checkout
       - attach_workspace:
@@ -51,6 +50,9 @@ jobs:
     machine:
       enabled: true
     steps:
+      - checkout
+      - attach_workspace:
+          at: ./
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
       - run: scp ~/repo/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "cd circletv-ms-authentication && docker-compose pull && docker-compose up --detach --build"
