@@ -39,9 +39,10 @@ jobs:
     machine:
       enabled: true
     environment:
-      DOCKER_COMPOSE_FILE_PRODUCTION: "$(cat docker-compose.prod.yml)"
       steps:
-        - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication && echo $DOCKER_COMPOSE_FILE_PRODUCTION > docker-compose.yml && docker-compose pull && docker-compose up --detach --build"
+        - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
+        - run: scp ~/repo/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
+        - run: ssh ${SSH_HOST_PRODUCTION_WEB} "cd circletv-ms-authentication && docker-compose pull && docker-compose up --detach --build"
     
 workflows:
   version: 2
