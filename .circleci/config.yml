@@ -50,6 +50,8 @@ jobs:
     machine:
       enabled: true
     steps:
+      - attach_workspace:
+          at: ./
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
       - run: ls ~/
       - run: scp ~/-microservices-authentication/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
