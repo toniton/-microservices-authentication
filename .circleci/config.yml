@@ -49,9 +49,11 @@ jobs:
   deploy:
     machine:
       enabled: true
+    working_directory: ~/-microservices-authentication
     steps:
-      - checkout
-      - run: ls /
+      - attach_workspace:
+          at: .
+      - run: ls ~/-microservices-authentication
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
       - run: scp ~/-microservices-authentication/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "cd circletv-ms-authentication && docker-compose pull && docker-compose up --detach --build"
