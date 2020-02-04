@@ -51,8 +51,7 @@ jobs:
       enabled: true
     working_directory: ~/-microservices-authentication
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - run: ls ~/-microservices-authentication
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
       - run: scp ~/-microservices-authentication/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
