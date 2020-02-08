@@ -10,4 +10,4 @@ RUN npm run build
 
 EXPOSE 8090
 
-ENTRYPOINT [ "npm", "run start" ]
+ENTRYPOINT [ "npm", "start" ]
