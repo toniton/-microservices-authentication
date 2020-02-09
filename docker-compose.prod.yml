@@ -2,6 +2,7 @@ version: '3.7'
 services:
   circletv-ms-authentication:
     image: toniton/microservices-authentication:latest
+    container_name: ms-authentication
     restart: always
     ports:
       - 8090:8090

@@ -4,6 +4,7 @@ services:
 
   circletv-ms-authentication:
     build: .
+    container_name: ms-authentication
     restart: always
     ports:
       - 8090:8090
