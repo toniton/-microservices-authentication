@@ -53,8 +53,9 @@ jobs:
     steps:
       - checkout
       - run: ls ~/-microservices-authentication
-      - run: ls ~/
-      - run: cat ~/.env
+      - run: ls -a ~/
+      - run: cat ~/.bash_profile
+      - run: env
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
       - run: scp ~/-microservices-authentication/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "cd circletv-ms-authentication && docker-compose pull && docker-compose up --detach --build"
