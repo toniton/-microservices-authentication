@@ -1,0 +1,12 @@
+dist/
+node_modules/
+package-lock.json
+.circleci/
+test/
+README.md
+npm-debug.log
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore

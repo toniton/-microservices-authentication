@@ -1,7 +1,5 @@
 version: '3.7'
-
 services:
-
   circletv-ms-authentication:
     image: toniton/microservices-authentication:latest
     restart: always
