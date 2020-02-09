@@ -58,7 +58,7 @@ jobs:
       - run: env
       - run: ssh ${SSH_HOST_PRODUCTION_WEB} "mkdir -p circletv-ms-authentication"
       - run: scp ~/-microservices-authentication/docker-compose.prod.yml ${SSH_HOST_PRODUCTION_WEB}:circletv-ms-authentication/docker-compose.yml
-      - run: ssh ${SSH_HOST_PRODUCTION_WEB} "cd circletv-ms-authentication && docker-compose pull && docker-compose up --detach --build"
+      - run: ssh ${SSH_HOST_PRODUCTION_WEB} "cd circletv-ms-authentication && docker-compose pull && docker-compose up --detach --build -e TYPEORM_CONNECTION=${TYPEORM_CONNECTION} TYPEORM_HOST=${TYPEORM_HOST} TYPEORM_USERNAME=${TYPEORM_USERNAME} TYPEORM_PASSWORD=${TYPEORM_PASSWORD} TYPEORM_DATABASE=${TYPEORM_DATABASE} TYPEORM_PORT=${TYPEORM_PORT} TYPEORM_ENTITIES=${TYPEORM_ENTITIES}"
     
 workflows:
   version: 2
