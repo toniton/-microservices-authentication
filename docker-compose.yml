@@ -8,6 +8,3 @@ services:
     restart: always
     ports:
       - 8090:8090
-    environment:
-      MS_AUTHENTICATION_DB_HOSTNAME: root
-      MS_AUTHENTICATION_DB_PORT: example
