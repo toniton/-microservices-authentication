@@ -56,7 +56,7 @@ jobs:
       - run: ls -a ~/
       - run: cat ~/.zshrc
       - run: cat ~/.profile
-      - run: cat ~/.config
+      - run: ls ~/.config
       - run: cat ~/.circlerc
       - run: cat ~/.bashrc
       - run: cat ~/.bash_profile
