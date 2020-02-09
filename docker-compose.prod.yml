@@ -8,5 +8,7 @@ services:
     environment:
       MS_AUTHENTICATION_DB_HOSTNAME: root
       MS_AUTHENTICATION_DB_PORT: example
+    external_links:
+      - mongo
     networks:
       - mongo
