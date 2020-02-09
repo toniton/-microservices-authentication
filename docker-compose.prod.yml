@@ -12,3 +12,6 @@ services:
       - mongo
     networks:
       - mongo
+networks:
+  mongo:
+    external: true
