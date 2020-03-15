@@ -2,8 +2,10 @@ version: '3.7'
 services:
   authentication:
     build: .
-    container_name: ms-authentication
+    container_name: ms-auth
     restart: always
+    volumes:
+      - ./dist:/usr/app/dist
     ports:
       - 8090:8090
     depends_on:
@@ -11,10 +13,8 @@ services:
 
   database:
     image: mongo
-    container_name: mongo
+    container_name: mongo-auth
     restart: always
-    ports:
-      - 27018:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
