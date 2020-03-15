@@ -24,6 +24,7 @@ export class AppService {
       accessToken: this.jwtService.sign(payload),
     };
   }
+
   root(): string {
     return 'Authentication Microservice';
   }

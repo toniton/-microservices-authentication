@@ -36,4 +36,12 @@ export class AccountService {
     return await this.authAccountRepository.save(authAccount)
       .catch(({ errmsg }): any => ({ errmsg }));
   }
+
+  async changePassword(account: AuthAccount & { newpassword: string}) {
+    const { username, newpassword } = account;
+    // throw new Error('Method not implemented.');
+    return this.authAccountRepository.update({
+      username,
+    }, { password: newpassword });
+  }
 }

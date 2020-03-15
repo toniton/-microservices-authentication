@@ -33,6 +33,12 @@ export class AppController {
     return this.accountService.create(req.body);
   }
 
+  @UseGuards(AuthGuard('jwt'))
+  @Post('changepassword')
+  changePassword(@Request() req) {
+    return this.accountService.changePassword(req.body);
+  }
+
   @Get('accounts')
   getAllAccount() {
     return this.accountService.findAll();
