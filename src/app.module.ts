@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthAccountModule } from 'account/account.module';
+import { ResetModule } from './reset/reset.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthAccountModule } from 'account/account.module';
       signOptions: { expiresIn: '60s' },
     }),
     AuthAccountModule,
+    ResetModule,
   ],
   controllers: [AppController],
   providers: [AppService, LocalStrategy, JwtStrategy],

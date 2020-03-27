@@ -7,6 +7,10 @@ db.createUser(
         pwd: "example",
         roles: [
             {
+                role: "userAdmin",
+                db: "authentication-db"
+            },
+            {
                 role: "readWrite",
                 db: "authentication-db"
             }

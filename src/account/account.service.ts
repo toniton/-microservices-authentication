@@ -13,11 +13,11 @@ export class AccountService {
   ) { }
 
   async findAll(): Promise<AuthAccount[] | undefined> {
-    return this.authAccountRepository.find();
+    return await this.authAccountRepository.find();
   }
 
   async findOne(username: string): Promise<AuthAccount | undefined> {
-    return this.authAccountRepository.findOne({
+    return await this.authAccountRepository.findOne({
       where: {
         username,
       },
@@ -25,7 +25,7 @@ export class AccountService {
   }
 
   async findByEmailAndPassword(username: string, password: string): Promise<AuthAccount | undefined> {
-    return this.authAccountRepository.findOne({
+    return await this.authAccountRepository.findOne({
       username,
       password: createHmac('sha256', password).digest('hex'),
     });
@@ -37,11 +37,10 @@ export class AccountService {
       .catch(({ errmsg }): any => ({ errmsg }));
   }
 
-  async changePassword(account: AuthAccount & { newpassword: string}) {
-    const { username, newpassword } = account;
-    // throw new Error('Method not implemented.');
-    return this.authAccountRepository.update({
-      username,
-    }, { password: newpassword });
+  async changePassword(account: AuthAccount): Promise<AuthAccount | undefined | any> {
+    const { username, password } = account;
+    const accountRepo = await this.authAccountRepository.findOne({ username });
+    accountRepo.password = password;
+    return await this.authAccountRepository.save(accountRepo).catch(({ errmsg }) => ({ errmsg }));
   }
 }

@@ -1,22 +1,22 @@
-import { Entity, Column, ObjectIdColumn, CreateDateColumn, Unique, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, CreateDateColumn, Unique, BeforeInsert, BeforeUpdate, ObjectID, UpdateDateColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Optional } from '@nestjs/common';
 import { IsEmail, MinLength } from 'class-validator';
-import { createHmac } from 'crypto';
+import { hashPlainPassword } from 'util/util';
 
 @Entity()
 @Unique(['username', 'email'])
 export class AuthAccount {
   @ObjectIdColumn()
   // tslint:disable-next-line:variable-name
-  _id: string;
+  _id: ObjectID;
 
   @Column({ length: 500 })
   username: string;
 
   @Exclude()
   @MinLength(4)
-  @Column({ length: 500 })
+  @Column({ length: 500, select: false })
   password: string;
 
   @Column('text')
@@ -33,14 +33,17 @@ export class AuthAccount {
   @Column()
   isPublished: boolean;
 
+  @UpdateDateColumn()
+  updatedDate: Date;
+
   @CreateDateColumn()
-  createdDate: string;
+  createdDate: Date;
 
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
     if (this.password) {
-      this.password = createHmac('sha256', this.password).digest('hex');
+      this.password = hashPlainPassword(this.password);
     }
   }
 }

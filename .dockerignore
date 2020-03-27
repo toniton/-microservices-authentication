@@ -9,3 +9,4 @@ docker-compose*
 .dockerignore
 .git
 .gitignore
+.vscode
